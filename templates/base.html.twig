@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}ENI SORTIR{% endblock %}</title>
+    <!-- Custom fonts for this template-->
+    {#    <link href="{{ asset('styles/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">#}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous">
+{#    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">#}
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="{{ asset('styles/css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+</head>
+
+<body id="page-top" >
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+                <div class="sidebar-brand-icon">
+                    <img src="{{ asset('styles/img/logo_ENI.png') }}" alt="logo ENI" style="width: 50px; height: 50px;">
+                </div>
+                <div class="sidebar-brand-text mx-3">Sortie ENI <sup>[ADMIN]</sup></div>
+            </a>
+        {% else %}
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+                <div class="sidebar-brand-icon">
+                    <img src="{{ asset('styles/img/logo_ENI.png') }}" alt="logo ENI" style="width: 50px; height: 50px;">
+                </div>
+                <div class="sidebar-brand-text mx-3">Sortie ENI</div>
+            </a>
+        {% endif %}
+
+
+
+
+        <!-- Nav Items - Admin Functions -->
+        {% if is_granted('ROLE_ADMIN') %}
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Accueil</span>
+                </a>
+            </li>
+            <li class="nav-item">
+{#                <a class="nav-link" href="{{ path('app_profile', {'id': app.user.id}) }}">#}
+{#                    <i class="fa-solid fa-user"></i>#}
+{#                    <span>Vous</span>#}
+{#                </a>#}
+            </li>
+            <hr class="sidebar-divider">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Gestion
+            </div>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">
+                    <i class="fa-solid fa-box"></i>
+                    <span>Dashboard admin</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/mail/status">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>Mail API</span>
+                </a>
+            </li>
+            {#            <li class="nav-item">#}
+            {#                <a class="nav-link" href="/export/">#}
+            {#                    <i class="fa-solid fa-file-export"></i>#}
+            {#                    <span>Export API</span>#}
+            {#                </a>#}
+            {#            </li>#}
+            {#            <li class="nav-item">#}
+            {#                <a class="nav-link" href="{{ path('app_user_index') }}">#}
+            {#                <a class="nav-link" href="">#}
+            {#                    <i class="fa-solid fa-user-gear"></i>#}
+            {#                    <span>Gestion utilisateurs</span>#}
+            {#                </a>#}
+            {#            </li>#}
+        {% else %}
+            {% if is_granted('ROLE_ORGANISATEUR') %}
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Accueil</span>
+                    </a>
+                </li>
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link" href="{{ path('app_profile', {'id': app.user.id}) }}">#}
+{#                        <i class="fa-solid fa-user"></i>#}
+{#                        <span>Vous</span>#}
+{#                    </a>#}
+{#                </li>#}
+                <hr class="sidebar-divider">
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Gestion
+                </div>
+                {#            <li class="nav-item">#}
+                {#                <a class="nav-link" href="/admin">#}
+                {#                    <i class="fa-solid fa-box"></i>#}
+                {#                    <span>Dashboard admin</span>#}
+                {#                </a>#}
+                {#            </li>#}
+                <li class="nav-item">
+                    <a class="nav-link" href="/histo-sorties">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span>Historisation</span>
+                    </a>
+                </li>
+
+            {% else %}
+
+                {% if app.user %}
+                    <li class="nav-item">
+                        {#                    <a class="nav-link" href="{{ path('app_user_abonnements', { 'id': app.user.id }) }}">#}
+                        <a class="nav-link" href="">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span>Mes sorties</span>
+                        </a>
+                    </li>
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="{{ path('app_profile', {'id': app.user.id}) }}">#}
+{#                            <i class="fa-solid fa-user"></i>#}
+{#                            <span>Vous</span>#}
+{#                        </a>#}
+{#                    </li>#}
+                {% else %}
+                    <li class="nav-item">
+
+                    </li>
+                {% endif %}
+
+            {% endif %}
+        {% endif %}
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Search -->
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="searchForm">
+                    <div class="input-group position-relative w-100">
+                        <input type="text" id="search-input" class="form-control bg-light border-0 small" placeholder="Rechercher une sortie, un organisateur..." aria-label="Search" aria-describedby="basic-addon2" autocomplete="off">
+                        <div class="input-group-append">
+                            <button class="btn btn-grey" type="submit">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+
+                        <!-- Résultats de la recherche -->
+                        <ul id="search-results" class="dropdown-menu w-100 mt-1 position-absolute" style="display: none;">
+                            <!-- Les résultats seront insérés ici -->
+                        </ul>
+                    </div>
+                </form>
+
+
+
+
+
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+
+                    <!-- Nav Item - Alerts -->
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        <a class="nav-link dropdown-toggle" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bell fa-fw"></i>
+                            <!-- Counter - Alerts -->
+                            <span class="badge badge-danger badge-counter" id="alerts-counter">0</span>
+                        </a>
+                        <!-- Dropdown - Alerts -->
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                            <h6 class="dropdown-header d-flex justify-content-between align-items-center">
+                                <span>Notifications</span>
+                                <button id="clear-notifications-btn" class="btn btn-sm btn-link text-white" style="text-decoration: none;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </h6>
+
+                            <div id="alerts-list">
+                                <!-- Les notifications seront chargées ici -->
+                                <a class="dropdown-item text-center small text-gray-500">Aucune nouvelle alerte</a>
+                            </div>
+                        </div>
+
+
+                    </li>
+
+
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+{#                        <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+{#                            <!-- Affichage du pseudo et de la photo de profil de l'utilisateur -->#}
+{#                            {% if app.user %}#}
+{#                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ app.user.pseudo }}</span>#}
+{#                                {% if is_granted('ROLE_ORGANISATEUR') %}#}
+{#                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small fw-bold">[ORGANISATEUR]</span>#}
+{#                                {% endif %}#}
+{#                                {% if is_granted('ROLE_ADMIN') %}#}
+{#                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small fw-bold">[ADMIN]</span>#}
+{#                                {% endif %}#}
+
+{#                                <img class="img-profile rounded-circle"#}
+{#                                     src="{{ app.user.picture ? asset('profile_pictures/' ~ app.user.picture) : asset('profile_pictures/default.svg') }}"#}
+{#                                     alt="Photo de profil de {{ app.user.pseudo }}">#}
+{#                            {% else %}#}
+{#                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Guest</span>#}
+{#                                <img class="img-profile rounded-circle"#}
+{#                                     src="{{ asset('profile_pictures/default.svg') }}"#}
+{#                                     alt="Photo par défaut">#}
+{#                            {% endif %}#}
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                            {% if app.user %}
+{#                                <a class="dropdown-item" href="{{ path('app_profile', {'id': app.user.id}) }}">#}
+{#                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>#}
+{#                                    Profil#}
+{#                                </a>#}
+                                <div class="dropdown-divider"></div>
+{#                                <a class="dropdown-item" href="{{ path('app_logout') }}">#}
+{#                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>#}
+{#                                    Déconnexion#}
+{#                                </a>#}
+                            {% else %}
+{#                                <a class="dropdown-item" href="{{ path('app_login') }}">#}
+{#                                    <i class="fas fa-sign-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>#}
+{#                                    Connexion#}
+{#                                </a>#}
+                                {#                                <a class="dropdown-item" href="{{ path('app_register') }}">#}
+                                {#                                    <i class="fas fa-user-plus fa-sm fa-fw mr-2 text-gray-400"></i>#}
+                                {#                                    Inscription#}
+                                {#                                </a>#}
+                            {% endif %}
+                        </div>
+                    </li>
+
+
+                </ul>
+
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                {% block body %}{% endblock %}
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+<!-- Scroll to Top Button -->
+{#<a class="scroll-to-top rounded" href="#page-top">#}
+{#    <i class="fas fa-angle-up"></i>#}
+{#</a>#}
+
+<div>
+    <!-- Bouton fixe en bas à droite -->
+    <button id="openOffCanvas" class="btn btn-primary btn-lg" style="
+        position: fixed;
+        bottom: 20px;
+        right: 90px;
+        z-index: 1000;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        padding: 10px 20px;
+        border-radius: 50px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    ">
+        <i class="fa-regular fa-comment"></i>
+    </button>
+</div>
+
+<!-- Off-canvas -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasConversations" aria-labelledby="offcanvasConversationsLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasConversationsLabel">Mes Conversations</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <!-- Le contenu sera chargé dynamiquement via fetch() -->
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('openOffCanvas').addEventListener('click', function() {
+            fetch('/offcanvas')
+                .then(response => response.text())
+                .then(html => {
+                    document.querySelector('.offcanvas-body').innerHTML = html;
+                    var offcanvasElement = document.getElementById('offcanvasConversations');
+                    var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                    offcanvas.show();
+                });
+        });
+    });
+</script>
+
+
+
+<style>
+    .offcanvas {
+        transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+</style>
+
+
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{#<script src="{{ asset('js/chat/chat.js') }}"></script>#}
+
+
+<!-- Scripts -->
+{% block javascripts %}
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ asset('styles/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('styles/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{{ asset('styles/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{{ asset('styles/js/sb-admin-2.min.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+{% endblock %}
+
+</body>
+
+</html>
