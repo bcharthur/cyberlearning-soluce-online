@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Python{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h1>Gestion du script Python</h1>
+                        <p class="lead">Choisissez un script à exécuter ou à éditer.</p>
+
+                        <!-- Select pour choisir le script -->
+                        <div class="mb-3">
+                            <label for="script-select" class="form-label">Sélectionnez un script :</label>
+                            <select class="form-select" id="script-select">
+                                {% for script in scripts %}
+                                    <option value="{{ script }}">{{ script }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Boutons alignés côte à côte -->
+                        <div class="d-flex justify-content-center mb-4">
+                            <button class="btn btn-primary me-2" id="run-script-btn" title="Exécuter le script">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="btn btn-secondary me-2" id="edit-script-btn" data-bs-toggle="modal" data-bs-target="#editScriptModal" title="Éditer le script">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <a class="btn btn-info" data-bs-toggle="collapse" href="#console" role="button" aria-expanded="false" aria-controls="console" title="Ouvrir la console">
+                                <i class="fa-solid fa-terminal"></i>
+                            </a>
+                        </div>
+
+                        <h3>Sortie du script :</h3>
+                        <div id="script-output" class="alert alert-secondary" role="alert">
+                            <em>Le script n'a pas encore été exécuté.</em>
+                        </div>
+
+                        <!-- Collapse pour la console -->
+                        <div class="collapse mt-3" id="console">
+                            <h4>Console :</h4>
+                            <pre id="console-output" class="bg-light p-3 rounded"><em>Aucune sortie pour l'instant.</em></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h1>Serveur SMTP</h1>
+                        <p class="lead">Démarrer, arrêter, redémarrer un serveur SMTP ou envoyer un e-mail.</p>
+
+                        <!-- Boutons SMTP -->
+                        <div class="d-flex justify-content-center mb-4">
+                            <button class="btn btn-success me-2" id="smtp-start-btn" title="Démarrer le serveur SMTP">Démarrer</button>
+                            <button class="btn btn-danger me-2" id="smtp-stop-btn" title="Arrêter le serveur SMTP">Arrêter</button>
+                            <button class="btn btn-warning me-2" id="smtp-restart-btn" title="Redémarrer le serveur SMTP">Redémarrer</button>
+                            <button class="btn btn-info" id="smtp-modal-send-btn" data-bs-toggle="modal" data-bs-target="#sendMailModal" title="Envoyer un mail">Envoyer un mail</button>
+                        </div>
+
+                        <h3>Logs :</h3>
+                        <div class="alert alert-secondary" id="smtp-output">
+                            <em>Aucun log pour l'instant.</em>
+                        </div>
+
+                        <!-- Collapse pour la console -->
+                        <div class="collapse mt-3" id="console">
+                            <h4>Console :</h4>
+                            <pre id="console-output" class="bg-light p-3 rounded"><em>Aucune sortie pour l'instant.</em></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour envoyer un e-mail -->
+    <div class="modal fade" id="sendMailModal" tabindex="-1" aria-labelledby="sendMailModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sendMailModalLabel">Envoyer un e-mail</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="send-mail-form">
+                        <div class="mb-3">
+                            <label for="from-email" class="form-label">De :</label>
+                            <input type="email" class="form-control" id="from-email" value="eni.sortir.notif@gmail.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="to-email" class="form-label">À :</label>
+                            <input type="email" class="form-control" id="to-email" placeholder="Entrez l'e-mail du destinataire" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Objet :</label>
+                            <input type="text" class="form-control" id="subject" placeholder="Entrez l'objet de l'e-mail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="body" class="form-label">Message :</label>
+                            <textarea class="form-control" id="body" rows="5" placeholder="Entrez votre message ici..." required></textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="send-mail-btn">
+                            <span class="spinner-border spinner-border-sm d-none" id="send-mail-spinner" role="status" aria-hidden="true"></span>
+                            Envoyer
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Inclure les modals depuis les fragments -->
+    {% include 'home/fragments/edit_script_modal.html.twig' %}
+    {% include 'home/fragments/success_modal.html.twig' %}
+
+    <script>
+
+
+    </script>
+
+    <script src="{{ asset('js/home/run-script.js') }}"></script>
+    <script src="{{ asset('js/home/edit-script.js') }}"></script>
+    <script src="{{ asset('js/home/save-script.js') }}"></script>
+
+    <script src="{{ asset('js/mail/restart.js') }}"></script>
+    <script src="{{ asset('js/mail/send-mail.js') }}"></script>
+    <script src="{{ asset('js/mail/start.js') }}"></script>
+    <script src="{{ asset('js/mail/status.js') }}"></script>
+    <script src="{{ asset('js/mail/stop.js') }}"></script>
+{% endblock %}
