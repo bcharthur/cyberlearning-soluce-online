@@ -1,7 +1,7 @@
-document.getElementById('run-script-btn').addEventListener('click', function () {
-    const scriptName = document.getElementById('script-select').value;
+document.getElementById('run-script-default-btn').addEventListener('click', function () {
+    const scriptName = document.getElementById('script-select-default').value;
 
-    fetch('/run-script', {
+    fetch('/run-script-default', {
         method: 'POST',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',

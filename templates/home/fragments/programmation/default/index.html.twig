@@ -1,0 +1,66 @@
+<!-- Carte 1 : Gestion du script Python -->
+<div class="col-sm-12 col-md-6 col-lg-3 mb-4">
+    <div class="card h-100">
+        <!-- Card Header avec bouton Accordion -->
+        <div class="card-header" id="headingDefault">
+            <h5 class="mb-0">
+                <button class="btn btn-link text-decoration-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDefault" aria-expanded="false" aria-controls="collapseDefault">
+                    Default
+                </button>
+            </h5>
+        </div>
+        <!-- Contenu Accordion de la carte -->
+        <div id="collapseDefault" class="accordion-collapse collapse" aria-labelledby="headingDefault">
+            <div class="card-body text-center d-flex flex-column">
+                <p class="lead">Choisissez un script à exécuter ou à éditer.</p>
+
+                <!-- Row contenant le sélecteur et les boutons -->
+                <div class="row align-items-end mb-4">
+                    <!-- Colonne pour le sélecteur -->
+                    <div class="col-8">
+                        {# <label for="script-select" class="form-label">Sélectionnez un script :</label> #}
+                        <select class="form-select" id="script-select-default">
+                            {% for script in scripts %}
+                                <option value="{{ script }}">{{ script }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Colonne pour les boutons -->
+                    <div class="col-4">
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-primary me-2" id="run-script-default-btn" title="Exécuter le script">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="btn btn-secondary me-2" id="edit-script-default-btn" data-bs-toggle="modal" data-bs-target="#editScriptModal" title="Éditer le script">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <a class="btn btn-info" data-bs-toggle="collapse" href="#console1" role="button" aria-expanded="false" aria-controls="console1" title="Ouvrir la console">
+                                <i class="fa-solid fa-terminal"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Sortie du script :</h3>
+                <div id="script-output" class="alert alert-secondary" role="alert">
+                    <em>Le script n'a pas encore été exécuté.</em>
+                </div>
+
+                <!-- Collapse pour la console -->
+                <div class="collapse mt-3" id="console1">
+                    <h4>Console :</h4>
+                    <pre id="console-output" class="bg-light p-3 rounded"><em>Aucune sortie pour l'instant.</em></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inclure les modals depuis les fragments -->
+{% include 'home/fragments/programmation/default/modals/edit_script_modal.html.twig' %}
+    {% include 'home/fragments/programmation/default/modals/success_modal.html.twig' %}
+
+<script src="{{ asset('js/home/default/run.js') }}"></script>
+<script src="{{ asset('js/home/default/edit.js') }}"></script>
+<script src="{{ asset('js/home/default/save.js') }}"></script>

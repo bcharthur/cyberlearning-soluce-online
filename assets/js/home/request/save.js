@@ -1,9 +1,9 @@
 // Sauvegarder les modifications du script
-document.getElementById('save-script-btn').addEventListener('click', function () {
-    const scriptName = document.getElementById('script-select').value;
-    const scriptContent = document.getElementById('script-content').value;
+document.getElementById('save-script-request-btn').addEventListener('click', function () {
+    const scriptName = document.getElementById('script-select-request').value;
+    const scriptContent = document.getElementById('script-content-request').value; // Assure que l'ID est correct
 
-    fetch('/save-script', {
+    fetch('/save-script-request', {
         method: 'POST',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
