@@ -8,7 +8,7 @@ import re  # Pour les expressions régulières
 import json  # Pour formater les sorties en JSON
 
 # Remplacez 'VOTRE_JETON_VALIDE' par votre jeton valide
-jeton = '91hYrwKZ0F11'
+jeton = 'VOTRE_JETON_VALIDE'
 url = f'https://cyber-learning.fr/cyber-challenge/programmation/socket/sujet.php?jeton={jeton}'
 
 # Fonction pour renvoyer une réponse JSON et quitter le script
