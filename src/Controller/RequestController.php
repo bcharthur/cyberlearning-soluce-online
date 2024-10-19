@@ -127,6 +127,16 @@ class RequestController extends AbstractController
         return new Response($scriptContent);
     }
 
+    #[Route('/get-script-show-request', name: 'get_script_show_request')]
+    public function getScriptShow(Request $request): Response
+    {
+        $scriptName = $request->query->get('script_name');
+        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/programmation/request/script/' . $scriptName;
+        $scriptContent = file_get_contents($scriptPath);
+
+        return new Response($scriptContent);
+    }
+
     #[Route('/save-script-request', name: 'save_script_request', methods: ['POST'])]
     public function saveScript(Request $request): Response
     {

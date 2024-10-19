@@ -103,6 +103,16 @@ class Base64Controller extends AbstractController
         return new Response(file_get_contents($scriptPath));
     }
 
+    #[Route('/get-script-show-base64', name: 'get_script_show_base64')]
+    public function getScriptShow(Request $request): Response
+    {
+        $scriptName = $request->query->get('script_name');
+        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/programmation/base64/script/' . $scriptName;
+        $scriptContent = file_get_contents($scriptPath);
+
+        return new Response($scriptContent);
+    }
+
     #[Route('/save-script-base64', name: 'save_script_base64', methods: ['POST'])]
     public function saveScript(Request $request): Response
     {
