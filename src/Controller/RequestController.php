@@ -12,29 +12,28 @@ use Psr\Log\LoggerInterface;
 
 class RequestController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
+    #[Route('/request', name: 'app_request_home')]
     public function index(LoggerInterface $logger): Response
     {
         $logPath = $this->getParameter('kernel.project_dir') . '/templates/home/logs/script.log';
         $scriptDir = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/programmation/request/script';
         $filesystem = new Filesystem();
 
-        // Liste des scripts Python dans le répertoire "scripts"
-        $scripts = array_diff(scandir($scriptDir), ['.', '..']);
+        $scripts = array_filter(array_diff(scandir($scriptDir), ['.', '..']), function ($file) use ($scriptDir) {
+            return pathinfo($scriptDir . '/' . $file, PATHINFO_EXTENSION) === 'py';
+        });
 
-        // Vérification si le fichier de logs existe, sinon on le crée
         if (!$filesystem->exists($logPath)) {
-            $filesystem->touch($logPath); // Créer le fichier s'il n'existe pas
+            $filesystem->touch($logPath);
             $logContent = 'Le fichier de logs a été créé, mais est encore vide.';
         } else {
-            // Lire le contenu du fichier de logs
             $logContent = file_get_contents($logPath);
         }
 
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+            'controller_name' => 'RequestController',
             'log_content' => $logContent,
-            'scripts' => $scripts  // Passer les scripts à la vue
+            'scripts' => $scripts
         ]);
     }
 

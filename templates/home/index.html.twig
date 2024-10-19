@@ -6,29 +6,84 @@
         <div class="container-fluid mt-5">
             <h1>Programmation</h1>
             <!-- Début de l'Accordion Bootstrap -->
-            <div class="accordion" id="accordionProg">
-                <!-- Première Ligne : 4 Cartes -->
-                <div class="row justify-content-center">
-                    <!-- Carte 0 : Default -->
-{#                    {% include 'home/fragments/programmation/default/index.html.twig' %}#}
 
-                    <!-- Carte 1 : request -->
-                    {% include 'home/fragments/programmation/request/index.html.twig' %}
-                    <!-- Carte 2 : Base64 -->
-{#                    {% include 'home/fragments/programmation/card2.html.twig' %}#}
-
-                    <!-- Carte 3 : CalculMental -->
-                    {#                    {% include 'home/fragments/programmation/card2.html.twig' %}#}
-
-                    <!-- Carte 4 : DeuxFoisDeSuite -->
-                    {#                    {% include 'home/fragments/programmation/card2.html.twig' %}#}
+    <div class="row">
+        <!-- Premier accordéon -->
+        <div class="col-md-3">
+            <div class="accordion" id="accordionOne">
+                <h3>Request (10 points)</h3>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Request - Run & Script
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionOne">
+                        <div class="accordion-body">
+                            {% include 'home/fragments/programmation/request/index.html.twig' %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- Deuxième accordéon -->
+        <div class="col-md-3">
+            <div class="accordion" id="accordionTwo">
+                <h3>Base 64 décodage (20 points)</h3>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            Base 64 - Run & Script
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionTwo">
+                        <div class="accordion-body">
+                            {% include 'home/fragments/programmation/base64/index.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- Troisième accordéon -->
+        <div class="col-md-3">
+            <div class="accordion" id="accordionThree">
+                <h3>Calcul mental (30 points)</h3>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                           Calcul mental - Run & Script
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionThree">
+                        <div class="accordion-body">
+                            {% include 'home/fragments/programmation/calculMental/index.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-
+        <!-- Quatrième accordéon -->
+        <div class="col-md-3">
+            <div class="accordion" id="accordionFour">
+                <h3>Deux fois de suite ? (50 points)</h3>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                            Deux Fois De Suite - Run & Script
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionFour">
+                        <div class="accordion-body">
+                            {% include 'home/fragments/programmation/deuxFoisDeSuite/index.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 {% endblock %}
