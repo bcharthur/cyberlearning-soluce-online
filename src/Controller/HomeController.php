@@ -3,39 +3,47 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Filesystem\Filesystem;
-use Psr\Log\LoggerInterface;
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(LoggerInterface $logger): Response
+    public function index(): Response
     {
-        $logPath = $this->getParameter('kernel.project_dir') . '/templates/home/logs/script.log';
-        $scriptDir = $this->getParameter('kernel.project_dir') . '/templates/home/scripts';
+        $scriptBase64Dir = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/programmation/base64/script';
+        $scriptRequestDir = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/programmation/request/script';
+        $scriptsCalculMentalDir = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/programmation/calculMental/script';
+        $scriptsDeuxFoisDeSuiteDir = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/programmation/deuxFoisDeSuite/script';
+
         $filesystem = new Filesystem();
 
-        // Liste des scripts Python dans le répertoire "scripts"
-        $scripts = array_diff(scandir($scriptDir), ['.', '..']);
+        // Obtenir les scripts Base64
+        $scriptsBase64 = array_filter(array_diff(scandir($scriptBase64Dir), ['.', '..']), function ($file) use ($scriptBase64Dir) {
+            return pathinfo($scriptBase64Dir . '/' . $file, PATHINFO_EXTENSION) === 'py';
+        });
 
-        // Vérification si le fichier de logs existe, sinon on le crée
-        if (!$filesystem->exists($logPath)) {
-            $filesystem->touch($logPath); // Créer le fichier s'il n'existe pas
-            $logContent = 'Le fichier de logs a été créé, mais est encore vide.';
-        } else {
-            // Lire le contenu du fichier de logs
-            $logContent = file_get_contents($logPath);
-        }
+        // Obtenir les scripts Request
+        $scriptsRequest = array_filter(array_diff(scandir($scriptRequestDir), ['.', '..']), function ($file) use ($scriptRequestDir) {
+            return pathinfo($scriptRequestDir . '/' . $file, PATHINFO_EXTENSION) === 'py';
+        });
+
+        // Obtenir les scripts Request
+        $scriptsCalculMental = array_filter(array_diff(scandir($scriptsCalculMentalDir), ['.', '..']), function ($file) use ($scriptsCalculMentalDir) {
+            return pathinfo($scriptsCalculMentalDir . '/' . $file, PATHINFO_EXTENSION) === 'py';
+        });
+
+        $scriptsDeuxFoisDeSuite = array_filter(array_diff(scandir($scriptsDeuxFoisDeSuiteDir), ['.', '..']), function ($file) use ($scriptsDeuxFoisDeSuiteDir) {
+            return pathinfo($scriptsDeuxFoisDeSuiteDir . '/' . $file, PATHINFO_EXTENSION) === 'py';
+        });
 
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-            'log_content' => $logContent,
-            'scripts' => $scripts  // Passer les scripts à la vue
+            'scripts_base64' => $scriptsBase64,
+            'scripts_request' => $scriptsRequest,
+            'scripts_calculMental' => $scriptsCalculMental,
+            'scripts_deuxFoisDeSuite' => $scriptsDeuxFoisDeSuite,
         ]);
     }
 }

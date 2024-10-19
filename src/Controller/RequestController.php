@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Process\Process;
@@ -11,6 +12,31 @@ use Psr\Log\LoggerInterface;
 
 class RequestController extends AbstractController
 {
+    #[Route('/request', name: 'app_request_home')]
+    public function index(LoggerInterface $logger): Response
+    {
+        $logPath = $this->getParameter('kernel.project_dir') . '/templates/home/logs/script.log';
+        $scriptDir = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/programmation/request/script';
+        $filesystem = new Filesystem();
+
+        $scripts = array_filter(array_diff(scandir($scriptDir), ['.', '..']), function ($file) use ($scriptDir) {
+            return pathinfo($scriptDir . '/' . $file, PATHINFO_EXTENSION) === 'py';
+        });
+
+        if (!$filesystem->exists($logPath)) {
+            $filesystem->touch($logPath);
+            $logContent = 'Le fichier de logs a été créé, mais est encore vide.';
+        } else {
+            $logContent = file_get_contents($logPath);
+        }
+
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'RequestController',
+            'log_content' => $logContent,
+            'scripts' => $scripts
+        ]);
+    }
+
     #[Route('/run-script-request', name: 'run_script_request', methods: ['POST'])]
     public function runScript(Request $request, LoggerInterface $logger): Response
     {
@@ -20,7 +46,7 @@ class RequestController extends AbstractController
         // Récupérer le nom du script et le jeton
         $scriptName = $request->request->get('script_name');
         $token = $request->request->get('token');  // Récupérer le jeton
-        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/scripts/' . $scriptName;
+        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/programmation/request/script/' . $scriptName;
 
         // Créer le processus pour exécuter le script Python avec le jeton
         $process = new Process([$pythonPath, $scriptPath, $token]);
@@ -95,7 +121,7 @@ class RequestController extends AbstractController
     public function getScript(Request $request): Response
     {
         $scriptName = $request->query->get('script_name');
-        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/scripts/' . $scriptName;
+        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/programmation/request/script/' . $scriptName;
         $scriptContent = file_get_contents($scriptPath);
 
         return new Response($scriptContent);
@@ -106,7 +132,7 @@ class RequestController extends AbstractController
     {
         $newContent = $request->request->get('script_content');
         $scriptName = $request->request->get('script_name');
-        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/scripts/' . $scriptName;
+        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/programmation/request/script/' . $scriptName;
 
         // Sauvegarde le nouveau contenu du script
         file_put_contents($scriptPath, $newContent);

@@ -1,58 +1,41 @@
 <!-- Carte 1 : Gestion du script Python -->
-<div class="col-sm-12 col-md-6 col-lg-3 mb-4">
-    <div class="card h-100">
-        <!-- Card Header avec bouton Accordion -->
-        <div class="card-header" id="headingRequest">
-            <h5 class="mb-0">
-                <button class="btn btn-link text-decoration-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRequest" aria-expanded="false" aria-controls="collapseRequest">
-                    Request
-                </button>
-            </h5>
-        </div>
-        <!-- Contenu Accordion de la carte -->
-        <div id="collapseRequest" class="accordion-collapse collapse" aria-labelledby="headingRequest">
-            <div class="card-body text-center d-flex flex-column">
-                <p class="lead">Choisissez un script à exécuter ou à éditer et saisissez votre jeton.</p>
+<p class="lead">Choisissez un script à exécuter ou à éditer et saisissez votre jeton.</p>
 
-                <!-- Row contenant le sélecteur, l'input et les boutons -->
-                <div class="row align-items-end mb-4">
-                    <!-- Colonne pour le sélecteur -->
-                    <div class="col-8">
-                        <select class="form-select" id="script-select-request">
-                            {% for script in scripts %}
-                                <option value="{{ script }}">{{ script }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+<div class="row align-items-end mb-4">
+    <!-- Sélecteur de scripts pour Request -->
+    <div class="col-8">
+        <select class="form-select" id="script-select-request">
+            {% for script in scripts_request %}
+                <option value="{{ script }}">{{ script }}</option>
+            {% endfor %}
+        </select>
+    </div>
 
-                    <!-- Colonne pour l'input jeton -->
-                    <div class="col-8 mt-3">
-                        <input type="text" class="form-control" id="token-input" placeholder="Entrez votre jeton" />
-                    </div>
+    <!-- Input pour le jeton -->
+    <div class="col-8 mt-3">
+        <input type="text" class="form-control" id="token-request-input" placeholder="Entrez votre jeton" />
+    </div>
 
-                    <!-- Colonne pour les boutons -->
-                    <div class="col-4">
-                        <div class="d-flex justify-content-center">
-                            <button class="btn btn-primary me-2" id="run-script-request-btn" title="Exécuter le script">
-                                <i class="fa-solid fa-play"></i>
-                            </button>
-                            <button class="btn btn-secondary me-2" id="edit-script-request-btn" data-bs-toggle="modal" data-bs-target="#editScriptModal" title="Éditer le script">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <h3>Sortie du script :</h3>
-                <div id="script-output" class="alert alert-secondary" role="alert">
-                    <em>Le script n'a pas encore été exécuté.</em>
-                </div>
-            </div>
+    <!-- Boutons -->
+    <div class="col-4">
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-primary me-2" id="run-script-request-btn" title="Exécuter le script">
+                <i class="fa-solid fa-play"></i>
+            </button>
+            <button class="btn btn-secondary me-2" id="edit-script-request-btn" data-bs-toggle="modal" data-bs-target="#editScriptModal" title="Éditer le script">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </button>
         </div>
     </div>
 </div>
 
-<!-- Inclure les modals depuis les fragments -->
+<h3>Sortie du script :</h3>
+<div id="script-output-request" class="alert alert-secondary" role="alert">
+    <em>Le script n'a pas encore été exécuté.</em>
+</div>
+
+
+<!-- Modals -->
 {% include 'home/fragments/programmation/request/modals/edit_script_modal.html.twig' %}
 {% include 'home/fragments/programmation/request/modals/success_modal.html.twig' %}
 

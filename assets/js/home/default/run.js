@@ -13,12 +13,12 @@ document.getElementById('run-script-default-btn').addEventListener('click', func
     })
         .then(response => response.text())
         .then(data => {
-            document.getElementById('script-output').innerHTML = data;
+            document.getElementById('script-output-default').innerHTML = data;
             document.getElementById('console-output').textContent = data;
         })
         .catch((error) => {
             console.error('Erreur:', error);
-            document.getElementById('script-output').innerHTML = 'Une erreur est survenue lors de l\'exécution du script.';
+            document.getElementById('script-output-default').innerHTML = 'Une erreur est survenue lors de l\'exécution du script.';
             document.getElementById('console-output').textContent = 'Erreur: ' + error;
         });
 });
