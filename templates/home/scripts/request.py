@@ -2,13 +2,20 @@
 
 import requests  # Pour faire des requêtes HTTP
 from bs4 import BeautifulSoup  # Pour parser le HTML
-import sys  # Pour gérer les interruptions du script
+import sys  # Pour gérer les interruptions du script et récupérer les arguments
 import time  # Pour ajouter une pause entre les tentatives
 import re  # Pour les expressions régulières
 import json  # Pour formater les sorties en JSON
 
-# Remplacez 'VOTRE_JETON_VALIDE' par votre jeton valide
-jeton = 'VOTRE_JETON_VALIDE'
+# Récupérer le jeton en tant qu'argument depuis le contrôleur Symfony
+if len(sys.argv) < 2:
+    print(json.dumps({
+        'status': 'error',
+        'message': 'Jeton manquant. Veuillez fournir un jeton.'
+    }))
+    sys.exit(1)
+
+jeton = sys.argv[1]  # Récupérer le jeton fourni en paramètre
 url = f'https://cyber-learning.fr/cyber-challenge/programmation/socket/sujet.php?jeton={jeton}'
 
 # Fonction pour renvoyer une réponse JSON et quitter le script
@@ -93,17 +100,10 @@ def main():
                 continue
 
         except requests.HTTPError as e:
-            if e.response.status_code == 500 and jeton != 'VOTRE_JETON_VALIDE':
-                # Erreur serveur, probablement jeton invalide
-                return_json(
-                    status='error',
-                    message='Jeton invalide ou erreur du serveur.'
-                )
-            else:
-                return_json(
-                    status='error',
-                    message=f'Erreur lors de la requête HTTP : {str(e)}'
-                )
+            return_json(
+                status='error',
+                message=f'Erreur lors de la requête HTTP : {str(e)}'
+            )
         except requests.RequestException as e:
             return_json(
                 status='error',
