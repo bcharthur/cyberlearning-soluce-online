@@ -115,6 +115,16 @@ class DeuxFoisDeSuiteController extends AbstractController
         return new Response(file_get_contents($scriptPath));
     }
 
+    #[Route('/get-script-show-deuxFoisDeSuite', name: 'get_script_show_deuxFoisDeSuite')]
+    public function getScriptShow(Request $request): Response
+    {
+        $scriptName = $request->query->get('script_name');
+        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/programmation/deuxFoisDeSuite/script/' . $scriptName;
+        $scriptContent = file_get_contents($scriptPath);
+
+        return new Response($scriptContent);
+    }
+
     #[Route('/save-script-deuxFoisDeSuite', name: 'save_script_deuxFoisDeSuite', methods: ['POST'])]
     public function saveScript(Request $request): Response
     {
