@@ -12,11 +12,12 @@
                 <h1>Programmation</h1>
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingZero">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseZero" aria-expanded="true" aria-controls="collapseZero">
-                            <img src="{{ asset('assets/styles/img/cl.png') }}" alt="Logo CyberLearning" style="width: 50px; height: 50px; margin-right: 10px;">
-                            CyberLearning
+                        <button class="accordion-button d-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseZero" aria-expanded="true" aria-controls="collapseZero">
+                            <img src="{{ asset('styles/img/cl.png') }}" alt="Logo CyberLearning" style="width: 100px; height: 100px; margin-right: 15px;">
+                            <strong style="font-size: 50px">Cyber Learning</strong>
                         </button>
                     </h2>
+
 
                     <div id="collapseZero" class="accordion-collapse collapse show" aria-labelledby="headingZero" data-bs-parent="#accordionZero">
                         <div class="accordion-body">
@@ -223,6 +224,10 @@
                         </div>
                     </div>
                 </div>
+
+                {% include 'home/fragments/rootMe/accordionZeroRootMe.html.twig' %}
+
+
             </div>
         </div>
 
