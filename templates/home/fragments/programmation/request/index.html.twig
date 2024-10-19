@@ -12,9 +12,9 @@
         <!-- Contenu Accordion de la carte -->
         <div id="collapseRequest" class="accordion-collapse collapse" aria-labelledby="headingRequest">
             <div class="card-body text-center d-flex flex-column">
-                <p class="lead">Choisissez un script à exécuter ou à éditer.</p>
+                <p class="lead">Choisissez un script à exécuter ou à éditer et saisissez votre jeton.</p>
 
-                <!-- Row contenant le sélecteur et les boutons -->
+                <!-- Row contenant le sélecteur, l'input et les boutons -->
                 <div class="row align-items-end mb-4">
                     <!-- Colonne pour le sélecteur -->
                     <div class="col-8">
@@ -23,6 +23,11 @@
                                 <option value="{{ script }}">{{ script }}</option>
                             {% endfor %}
                         </select>
+                    </div>
+
+                    <!-- Colonne pour l'input jeton -->
+                    <div class="col-8 mt-3">
+                        <input type="text" class="form-control" id="token-input" placeholder="Entrez votre jeton" />
                     </div>
 
                     <!-- Colonne pour les boutons -->
@@ -34,10 +39,6 @@
                             <button class="btn btn-secondary me-2" id="edit-script-request-btn" data-bs-toggle="modal" data-bs-target="#editScriptModal" title="Éditer le script">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
-                            <!-- Vous pouvez supprimer le bouton de console si vous ne l'utilisez plus -->
-                            <!-- <a class="btn btn-info" data-bs-toggle="collapse" href="#console1" role="button" aria-expanded="false" aria-controls="console1" title="Ouvrir la console">
-                                <i class="fa-solid fa-terminal"></i>
-                            </a> -->
                         </div>
                     </div>
                 </div>
@@ -46,13 +47,6 @@
                 <div id="script-output" class="alert alert-secondary" role="alert">
                     <em>Le script n'a pas encore été exécuté.</em>
                 </div>
-
-                <!-- Optionnel: Vous pouvez supprimer la section console si vous ne l'utilisez plus
-                <div class="collapse mt-3" id="console1">
-                    <h4>Console :</h4>
-                    <pre id="console-output" class="bg-light p-3 rounded"><em>Aucune sortie pour l'instant.</em></pre>
-                </div>
-                -->
             </div>
         </div>
     </div>

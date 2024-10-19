@@ -17,12 +17,13 @@ class RequestController extends AbstractController
         // Chemin vers Python
         $pythonPath = $this->getParameter('kernel.project_dir') . '/.venv/Scripts/python.exe';
 
-        // Récupérer le nom du script sélectionné
+        // Récupérer le nom du script et le jeton
         $scriptName = $request->request->get('script_name');
+        $token = $request->request->get('token');  // Récupérer le jeton
         $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/scripts/' . $scriptName;
 
-        // Créer le processus pour exécuter le script Python sélectionné
-        $process = new Process([$pythonPath, $scriptPath]);
+        // Créer le processus pour exécuter le script Python avec le jeton
+        $process = new Process([$pythonPath, $scriptPath, $token]);
 
         try {
             // Exécuter le processus sans lever d'exception en cas d'erreur
@@ -58,7 +59,7 @@ class RequestController extends AbstractController
                     // Erreur renvoyée par le script Python
                     $responseContent = $decodedOutput;
 
-                    // Log l'erreur sans les données sensibles (code_obtenu n'existe pas dans les erreurs)
+                    // Log l'erreur sans les données sensibles
                     $logger->error('Erreur lors de l\'exécution du script Python.', [
                         'message' => $decodedOutput['message']
                     ]);
