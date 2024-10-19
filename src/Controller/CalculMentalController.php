@@ -103,6 +103,16 @@ class CalculMentalController extends AbstractController
         return new Response(file_get_contents($scriptPath));
     }
 
+    #[Route('/get-script-show-calculMental', name: 'get_script_show_calculMental')]
+    public function getScriptShow(Request $request): Response
+    {
+        $scriptName = $request->query->get('script_name');
+        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/programmation/calculMental/script/' . $scriptName;
+        $scriptContent = file_get_contents($scriptPath);
+
+        return new Response($scriptContent);
+    }
+
     #[Route('/save-script-calculMental', name: 'save_script_calculMental', methods: ['POST'])]
     public function saveScript(Request $request): Response
     {

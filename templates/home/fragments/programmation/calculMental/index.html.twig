@@ -2,7 +2,7 @@
 <p class="lead">Choisissez un script à exécuter ou à éditer et saisissez votre jeton.</p>
 
 <div class="row align-items-end mb-4">
-    <!-- Sélecteur de scripts pour calculMental -->
+    <!-- Sélecteur de scripts pour CalculMental -->
     <div class="col-8">
         <select class="form-select" id="script-select-calculMental">
             {% for script in scripts_calculMental %}
@@ -10,11 +10,27 @@
             {% endfor %}
         </select>
     </div>
-
-    <!-- Input pour le jeton -->
-    <div class="col-8 mt-3">
-        <input type="text" class="form-control" id="token-calculMental-input" placeholder="Entrez votre jeton" />
+    <div class="col-4">
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-success me-2" id="btn-download-calculMental">
+                <i class="fa-solid fa-download"></i>
+            </button>
+            <button class="btn btn-warning me-2" id="show-script-calculMental-btn" data-bs-toggle="modal" data-bs-target="#showScriptCalculMentalModal" title="Voir le script">
+                <i class="fa-solid fa-eye"></i>
+            </button>
+        </div>
     </div>
+
+    <!-- Input pour le jeton avec un bouton clear -->
+    <div class="col-8 mt-3">
+        <div class="input-group">
+            <input type="text" class="form-control" id="token-calculMental-input" placeholder="Entrez votre jeton" />
+            <button class="btn btn-outline-secondary" type="button" id="clear-token-calculMental-input" title="Effacer le jeton">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+    </div>
+
 
     <!-- Boutons -->
     <div class="col-4">
@@ -22,14 +38,14 @@
             <button class="btn btn-primary me-2" id="run-script-calculMental-btn" title="Exécuter le script">
                 <i class="fa-solid fa-play"></i>
             </button>
-            <button class="btn btn-secondary me-2" id="edit-script-calculMental-btn" data-bs-toggle="modal" data-bs-target="#editScriptCalculMentalModal" title="Éditer le script">
+            <button class="btn btn-secondary me-2" id="edit-script-calculMental-btn" data-bs-toggle="modal" data-bs-target="#editScriptModal" title="Éditer le script" disabled>
                 <i class="fa-solid fa-pen-to-square"></i>
             </button>
         </div>
     </div>
 </div>
 
-<h3>Sortie du script :</h3>
+<h5>Sortie du script :</h5>
 <div id="script-output-calculMental" class="alert alert-secondary" role="alert">
     <em>Le script n'a pas encore été exécuté.</em>
 </div>
@@ -37,8 +53,18 @@
 
 <!-- Modals -->
 {% include 'home/fragments/programmation/calculMental/modals/edit_script_modal.html.twig' %}
+{% include 'home/fragments/programmation/calculMental/modals/show_script_modal.html.twig' %}
 {% include 'home/fragments/programmation/calculMental/modals/success_modal.html.twig' %}
+
+<!-- Modules -->
+{% include 'home/fragments/programmation/calculMental/modules/toast.html.twig' %}
+
 
 <script src="{{ asset('js/home/calculMental/run.js') }}"></script>
 <script src="{{ asset('js/home/calculMental/edit.js') }}"></script>
+<script src="{{ asset('js/home/calculMental/show.js') }}"></script>
 <script src="{{ asset('js/home/calculMental/save.js') }}"></script>
+<script src="{{ asset('js/home/calculMental/download.js') }}"></script>
+<script src="{{ asset('js/home/calculMental/copy.js') }}"></script>
+<script src="{{ asset('js/home/calculMental/clear_input.js') }}"></script>
+

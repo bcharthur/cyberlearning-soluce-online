@@ -10,11 +10,27 @@
             {% endfor %}
         </select>
     </div>
-
-    <!-- Input pour le jeton -->
-    <div class="col-8 mt-3">
-        <input type="text" class="form-control" id="token-deuxFoisDeSuite-input" placeholder="Entrez votre jeton" />
+    <div class="col-4">
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-success me-2" id="btn-download-deuxFoisDeSuite">
+                <i class="fa-solid fa-download"></i>
+            </button>
+            <button class="btn btn-warning me-2" id="show-script-deuxFoisDeSuite-btn" data-bs-toggle="modal" data-bs-target="#showScriptDeuxFoisDeSuiteModal" title="Voir le script">
+                <i class="fa-solid fa-eye"></i>
+            </button>
+        </div>
     </div>
+
+    <!-- Input pour le jeton avec un bouton clear -->
+    <div class="col-8 mt-3">
+        <div class="input-group">
+            <input type="text" class="form-control" id="token-deuxFoisDeSuite-input" placeholder="Entrez votre jeton" />
+            <button class="btn btn-outline-secondary" type="button" id="clear-token-deuxFoisDeSuite-input" title="Effacer le jeton">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+    </div>
+
 
     <!-- Boutons -->
     <div class="col-4">
@@ -22,23 +38,34 @@
             <button class="btn btn-primary me-2" id="run-script-deuxFoisDeSuite-btn" title="Exécuter le script">
                 <i class="fa-solid fa-play"></i>
             </button>
-            <button class="btn btn-secondary me-2" id="edit-script-deuxFoisDeSuite-btn" data-bs-toggle="modal" data-bs-target="#editScriptDeuxFoisDeSuiteModal" title="Éditer le script">
+            <button class="btn btn-secondary me-2" id="edit-script-deuxFoisDeSuite-btn" data-bs-toggle="modal" data-bs-target="#editScriptModal" title="Éditer le script" disabled>
                 <i class="fa-solid fa-pen-to-square"></i>
             </button>
         </div>
     </div>
 </div>
 
-<h3>Sortie du script :</h3>
+<h5>Sortie du script :</h5>
 <div id="script-output-deuxFoisDeSuite" class="alert alert-secondary" role="alert">
     <em>Le script n'a pas encore été exécuté.</em>
 </div>
 
 
+
 <!-- Modals -->
 {% include 'home/fragments/programmation/deuxFoisDeSuite/modals/edit_script_modal.html.twig' %}
+{% include 'home/fragments/programmation/deuxFoisDeSuite/modals/show_script_modal.html.twig' %}
 {% include 'home/fragments/programmation/deuxFoisDeSuite/modals/success_modal.html.twig' %}
+
+<!-- Modules -->
+{% include 'home/fragments/programmation/deuxFoisDeSuite/modules/toast.html.twig' %}
+
 
 <script src="{{ asset('js/home/deuxFoisDeSuite/run.js') }}"></script>
 <script src="{{ asset('js/home/deuxFoisDeSuite/edit.js') }}"></script>
+<script src="{{ asset('js/home/deuxFoisDeSuite/show.js') }}"></script>
 <script src="{{ asset('js/home/deuxFoisDeSuite/save.js') }}"></script>
+<script src="{{ asset('js/home/deuxFoisDeSuite/download.js') }}"></script>
+<script src="{{ asset('js/home/deuxFoisDeSuite/copy.js') }}"></script>
+<script src="{{ asset('js/home/deuxFoisDeSuite/clear_input.js') }}"></script>
+
