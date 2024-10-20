@@ -1,14 +1,14 @@
-document.getElementById('run-script-tcpRetourAuCollege-btn').addEventListener('click', function () {
-    const scriptName = document.getElementById('script-select-tcpRetourAuCollege').value;
+document.getElementById('run-script-tcpChaineEncodee-btn').addEventListener('click', function () {
+    const scriptName = document.getElementById('script-select-tcpChaineEncodee').value;
 
     // Désactiver les boutons pendant le chargement
-    const runBtn = document.getElementById('run-script-tcpRetourAuCollege-btn');
+    const runBtn = document.getElementById('run-script-tcpChaineEncodee-btn');
     runBtn.disabled = true;
 
     // Ajouter le spinner dans le bouton "Run"
     runBtn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
 
-    fetch('/run-script-tcpRetourAuCollege', {
+    fetch('/run-script-tcpChaineEncodee', {
         method: 'POST',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -25,20 +25,20 @@ document.getElementById('run-script-tcpRetourAuCollege-btn').addEventListener('c
             runBtn.disabled = false;
 
             if (data.status === 'success') {
-                document.getElementById('script-output-tcpRetourAuCollege').innerHTML = `<strong>Infos :</strong> ${data.message}`;
+                document.getElementById('script-output-tcpChaineEncodee').innerHTML = `<strong>Infos :</strong> ${data.message}`;
 
                 // Si la sortie brute est incluse dans la réponse
                 if (data.data && data.data.output) {
                     const output = data.data.output;
 
-                    document.getElementById('script-output-tcpRetourAuCollege').innerHTML += `
+                    document.getElementById('script-output-tcpChaineEncodee').innerHTML += `
                         <br><strong>Sortie brute :</strong><pre>${output}</pre>`;
 
                     // Rechercher la ligne contenant "Good job" et le flag
                     const flagLine = output.match(/\[\+\] Good job ! Here is your flag: (.*)/);
                     if (flagLine) {
                         const flag = flagLine[1];
-                        document.getElementById('script-output-tcpRetourAuCollege').innerHTML += `
+                        document.getElementById('script-output-tcpChaineEncodee').innerHTML += `
                             <br><strong class="bg-success text-white">Succès !</strong>
                             <br><strong>Flag :</strong> <span id="flag-text">${flag}</span>
                             <button type="button" class="btn btn-primary btn-sm ms-2" id="copy-flag-btn">
@@ -65,12 +65,12 @@ document.getElementById('run-script-tcpRetourAuCollege-btn').addEventListener('c
                             });
                         });
                     } else if (output.includes("Wrong answer")) {
-                        document.getElementById('script-output-tcpRetourAuCollege').innerHTML += `
+                        document.getElementById('script-output-tcpChaineEncodee').innerHTML += `
                             <br><strong class="bg-danger text-white">Échec !</strong>`;
                     }
                 }
             } else {
-                document.getElementById('script-output-tcpRetourAuCollege').innerHTML = `<strong>Erreur :</strong> ${data.message}`;
+                document.getElementById('script-output-tcpChaineEncodee').innerHTML = `<strong>Erreur :</strong> ${data.message}`;
             }
         })
         .catch((error) => {
@@ -80,6 +80,6 @@ document.getElementById('run-script-tcpRetourAuCollege-btn').addEventListener('c
             runBtn.innerHTML = `<i class="fa-solid fa-play"></i>`;
             runBtn.disabled = false;
 
-            document.getElementById('script-output-tcpRetourAuCollege').innerHTML = 'Une erreur est survenue lors de l\'exécution du script.';
+            document.getElementById('script-output-tcpChaineEncodee').innerHTML = 'Une erreur est survenue lors de l\'exécution du script.';
         });
 });

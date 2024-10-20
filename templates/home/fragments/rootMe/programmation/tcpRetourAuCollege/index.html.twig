@@ -3,14 +3,14 @@
 
 <div class="row align-items-end mb-4">
     <!-- Sélecteur de scripts pour Base64 -->
-    <div class="col-8">
-        <select class="form-select" id="script-select-base64">
+    <div class="col-6">
+        <select class="form-select" id="script-select-tcpRetourAuCollege">
             {% for script in scripts_tcpRetourAuCollege %}
                 <option value="{{ script }}">{{ script }}</option>
             {% endfor %}
         </select>
     </div>
-    <div class="col-4">
+    <div class="col-6">
         <div class="d-flex justify-content-center">
             <button class="btn btn-success me-2" id="btn-download-tcpRetourAuCollege">
                 <i class="fa-solid fa-download"></i>
@@ -18,30 +18,14 @@
             <button class="btn btn-warning me-2" id="show-script-tcpRetourAuCollege-btn" data-bs-toggle="modal" data-bs-target="#showScriptTcpRetourAuCollegeModal" title="Voir le script">
                 <i class="fa-solid fa-eye"></i>
             </button>
-        </div>
-    </div>
-
-    <!-- Input pour le jeton avec un bouton clear -->
-    <div class="col-8 mt-3">
-        <div class="input-group">
-            <input type="text" class="form-control" id="token-tcpRetourAuCollege-input" placeholder="Entrez votre jeton" />
-            <button class="btn btn-outline-secondary" type="button" id="clear-token-tcpRetourAuCollege-input" title="Effacer le jeton">
-                <i class="fa-solid fa-times"></i>
-            </button>
-        </div>
-    </div>
-
-
-    <!-- Boutons -->
-    <div class="col-4">
-        <div class="d-flex justify-content-center">
             <button class="btn btn-primary me-2" id="run-script-tcpRetourAuCollege-btn" title="Exécuter le script">
                 <i class="fa-solid fa-play"></i>
             </button>
-            <button class="btn btn-secondary me-2" id="edit-script-tcpRetourAuCollege-btn" data-bs-toggle="modal" data-bs-target="#editScriptModal" title="Éditer le script" disabled>
-                <i class="fa-solid fa-pen-to-square"></i>
-            </button>
+            <a class="btn btn-secondary me-2" id="open-challenge-tcpretouraucollege-on-browser-btn" href="https://www.root-me.org/fr/Challenges/Programmation/TCP-Retour-au-college" target="_blank">
+                <i class="fa-solid fa-globe"></i>
+            </a>
         </div>
+
     </div>
 </div>
 
@@ -61,10 +45,9 @@
 
 
 <script src="{{ asset('js/home/rootMe/tcpRetourAuCollege/run.js') }}"></script>
-<script src="{{ asset('js/home/rootMe/tcpRetourAuCollege/edit.js') }}"></script>
 <script src="{{ asset('js/home/rootMe/tcpRetourAuCollege/show.js') }}"></script>
 <script src="{{ asset('js/home/rootMe/tcpRetourAuCollege/save.js') }}"></script>
 <script src="{{ asset('js/home/rootMe/tcpRetourAuCollege/download.js') }}"></script>
 <script src="{{ asset('js/home/rootMe/tcpRetourAuCollege/copy.js') }}"></script>
-<script src="{{ asset('js/home/rootMe/tcpRetourAuCollege/clear_input.js') }}"></script>
+
 

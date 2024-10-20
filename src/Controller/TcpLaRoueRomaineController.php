@@ -10,13 +10,13 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
 use Psr\Log\LoggerInterface;
 
-class TcpRetourAuCollegeController extends AbstractController
+class TcpLaRoueRomaineController extends AbstractController
 {
-    #[Route('/tcpRetourAuCollege', name: 'app_tcpRetourAuCollege_home')]
+    #[Route('/tcpLaRoueRomaine', name: 'app_tcpLaRoueRomaine_home')]
     public function index(LoggerInterface $logger): Response
     {
         $logPath = $this->getParameter('kernel.project_dir') . '/templates/home/logs/script.log';
-        $scriptDir = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/rootMe/programmation/tcpRetourAuCollege/script';
+        $scriptDir = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/rootMe/programmation/tcpLaRoueRomaine/script';
         $filesystem = new Filesystem();
 
         $scripts = array_filter(array_diff(scandir($scriptDir), ['.', '..']), function ($file) use ($scriptDir) {
@@ -31,18 +31,18 @@ class TcpRetourAuCollegeController extends AbstractController
         }
 
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'TcpRetourAuCollegeController',
+            'controller_name' => 'TcpLaRoueRomaineController',
             'log_content' => $logContent,
             'scripts' => $scripts
         ]);
     }
 
-    #[Route('/run-script-tcpRetourAuCollege', name: 'run_script_tcpRetourAuCollege', methods: ['POST'])]
+    #[Route('/run-script-tcpLaRoueRomaine', name: 'run_script_tcpLaRoueRomaine', methods: ['POST'])]
     public function runScript(Request $request, LoggerInterface $logger): Response
     {
         $pythonPath = $this->getParameter('kernel.project_dir') . '/.venv/Scripts/python.exe';
         $scriptName = $request->request->get('script_name');
-        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/rootMe/programmation/tcpRetourAuCollege/script/' . $scriptName;
+        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/rootMe/programmation/tcpLaRoueRomaine/script/' . $scriptName;
 
         if (!file_exists($scriptPath)) {
             return $this->json([
@@ -94,11 +94,11 @@ class TcpRetourAuCollegeController extends AbstractController
     }
 
 
-    #[Route('/get-script-tcpRetourAuCollege', name: 'get_script_tcpRetourAuCollege')]
+    #[Route('/get-script-tcpLaRoueRomaine', name: 'get_script_tcpLaRoueRomaine')]
     public function getScript(Request $request): Response
     {
         $scriptName = $request->query->get('script_name');
-        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/rootMe/programmation/tcpRetourAuCollege/script/' . $scriptName;
+        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/rootMe/programmation/tcpLaRoueRomaine/script/' . $scriptName;
 
         if (!file_exists($scriptPath)) {
             return new Response('Le script demandé n\'existe pas.', Response::HTTP_NOT_FOUND);
@@ -107,22 +107,22 @@ class TcpRetourAuCollegeController extends AbstractController
         return new Response(file_get_contents($scriptPath));
     }
 
-    #[Route('/get-script-show-tcpRetourAuCollege', name: 'get_script_show_tcpRetourAuCollege')]
+    #[Route('/get-script-show-tcpLaRoueRomaine', name: 'get_script_show_tcpLaRoueRomaine')]
     public function getScriptShow(Request $request): Response
     {
         $scriptName = $request->query->get('script_name');
-        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/rootMe/programmation/tcpRetourAuCollege/script/' . $scriptName;
+        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/rootMe/programmation/tcpLaRoueRomaine/script/' . $scriptName;
         $scriptContent = file_get_contents($scriptPath);
 
         return new Response($scriptContent);
     }
 
-    #[Route('/save-script-tcpRetourAuCollege', name: 'save_script_tcpRetourAuCollege', methods: ['POST'])]
+    #[Route('/save-script-tcpLaRoueRomaine', name: 'save_script_tcpLaRoueRomaine', methods: ['POST'])]
     public function saveScript(Request $request): Response
     {
         $newContent = $request->request->get('script_content');
         $scriptName = $request->request->get('script_name');
-        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/rootMe/programmation/tcpRetourAuCollege/script/' . $scriptName;
+        $scriptPath = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/rootMe/programmation/tcpLaRoueRomaine/script/' . $scriptName;
 
         file_put_contents($scriptPath, $newContent);
 
