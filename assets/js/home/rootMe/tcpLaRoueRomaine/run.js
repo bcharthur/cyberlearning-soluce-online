@@ -70,7 +70,12 @@ document.getElementById('run-script-tcpLaRoueRomaine-btn').addEventListener('cli
                     }
                 }
             } else {
-                document.getElementById('script-output-tcpLaRoueRomaine').innerHTML = `<strong>Erreur :</strong> ${data.message}`;
+                // Gérer l'erreur spécifique lorsque la connexion échoue
+                if (data.message && data.message.includes(" Could not connect to challenge")) {
+                    document.getElementById('script-output-tcpLaRoueRomaine').innerHTML = `<strong>Erreur :</strong> ${data.message}`;
+                } else {
+                    document.getElementById('script-output-tcpLaRoueRomaine').innerHTML = `<strong>Erreur :</strong> Veuillez vous connecter d'abord sur la page du challenge en cliquant sur <strong><i class="fa-solid fa-globe"></i></strong>, la connexion doit être établie avant de pouvoir exécuter le script .`;
+                }
             }
         })
         .catch((error) => {

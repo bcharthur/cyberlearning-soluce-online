@@ -22,7 +22,7 @@ class HomeController extends AbstractController
 //Root Me
         $scriptsTcpRetourAuCollegeDir = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/rootMe/programmation/tcpRetourAuCollege/script';
         $scriptsTcpChaineEncodeeDir = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/rootMe/programmation/tcpChaineEncodee/script';
-
+        $scriptsTcpLaRoueRomaineDir = $this->getParameter('kernel.project_dir') . '/templates/home/fragments/rootMe/programmation/tcpLaRoueRomaine/script';
         $filesystem = new Filesystem();
 
 
@@ -54,6 +54,9 @@ class HomeController extends AbstractController
         $scriptsTcpChaineEncodee = array_filter(array_diff(scandir($scriptsTcpChaineEncodeeDir), ['.', '..']), function ($file) use ($scriptsTcpChaineEncodeeDir) {
             return pathinfo($scriptsTcpChaineEncodeeDir . '/' . $file, PATHINFO_EXTENSION) === 'py';
         });
+        $scriptsTcpLaRoueRomaine = array_filter(array_diff(scandir($scriptsTcpLaRoueRomaineDir), ['.', '..']), function ($file) use ($scriptsTcpLaRoueRomaineDir) {
+            return pathinfo($scriptsTcpLaRoueRomaineDir . '/' . $file, PATHINFO_EXTENSION) === 'py';
+        });
 
 
         return $this->render('home/index.html.twig', [
@@ -65,6 +68,7 @@ class HomeController extends AbstractController
             //RootMe
             'scripts_tcpRetourAuCollege' => $scriptsTcpRetourAuCollege,
             'scripts_tcpChaineEncodee' => $scriptsTcpChaineEncodee,
+            'scripts_tcpLaRoueRomaine' => $scriptsTcpLaRoueRomaine,
         ]);
     }
 }
